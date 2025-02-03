@@ -1,0 +1,23 @@
+; Read a number and then output that many 1s, followed by a 0. Repeat.
+
+@loop_start:
+subleq @iterator @IN
+
+@loop:
+subleq @iterator @n_one @proceed
+@done:
+subleq @iterator @iterator
+subleq @OUT @zero @loop_start
+
+@proceed:
+subleq @OUT @n_one
+subleq @zero @zero @loop
+
+
+; variables
+@iterator: .data 0
+
+; constants
+@one: .data 1
+@n_one: .data -1
+@zero: .data 0

@@ -1,0 +1,52 @@
+; Read a sequence of positive numbers (terminated by a zero) and
+; output the sequence in reverse order (with zero terminator). Repeat.
+
+@push_until_zero:
+subleq @tmp @IN
+subleq @stack @tmp
+subleq @tmp2 @tmp @prepare_to_pop
+subleq @counter @n_one
+subleq @push_until_zero+3, @n_one
+subleq @tmp @tmp
+subleq @tmp2 @tmp2 @push_until_zero
+
+@prepare_to_pop:
+subleq @tmp @push_until_zero+3
+subleq @tmp @n_one
+subleq @pop_loop+1 @tmp
+
+@pop_loop:
+subleq @tmp2 0
+subleq @OUT @tmp2
+subleq @pop_loop+1 @one
+subleq @tmp2 @tmp2
+subleq @counter @one @pop_done
+subleq @zero @zero @pop_loop
+
+
+@pop_done:
+; reset shit and go to push_until_zero
+subleq @OUT @zero
+subleq @tmp @tmp
+subleq @tmp2 @tmp2
+subleq @n_stack @stack
+subleq @push_until_zero+3 @tmp
+subleq @pop_loop+1 @pop_loop+1
+subleq @n_stack @n_stack
+subleq @counter @counter @push_until_zero
+
+
+; variables
+@tmp: .data 0
+@tmp2: .data 0
+@n_x: .data 0
+@counter: .data 0
+@n_stack: .data 0
+
+; constants
+@zero: .data 0
+@one: .data 1
+@n_one: .data -1
+
+; stack (must be last since it grows upwards)
+@stack: .data 0

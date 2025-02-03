@@ -1,0 +1,34 @@
+@loop:
+subleq @tmp @IN
+subleq @tmp2 @tmp2
+subleq @tmp2 @tmp @dequeue
+
+@enqueue:
+subleq @stack @tmp2
+subleq @count @n_one
+subleq @enqueue @n_one
+subleq @tmp @tmp @loop
+
+@dequeue:
+subleq @OUT @stack ; print A (top of stack)
+subleq @tmp @IN
+subleq @OUT @tmp   ; print B
+subleq @dequeue+1 @n_one
+subleq @tmp, @tmp
+subleq @count @one @reset
+subleq @tmp @tmp @dequeue
+
+@reset:
+subleq @OUT @IN @loop
+
+
+; constants
+@one: .data 1
+@n_one: .data -1
+
+; variables
+@count: .data 0
+@tmp: .data 0
+@tmp2: .data 0
+
+@stack: .data 0

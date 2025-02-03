@@ -1,0 +1,75 @@
+; Read two positive numbers (A, then B), divide A by B, and output
+; the quotient followed by the remainder. Repeat.
+
+; pseudocode for division algorithm:
+; R := A
+; Q := 0
+; while R ≥ B
+;   R := R − B
+;   Q := Q + 1
+; end
+; return (Q,R)
+
+
+; init variables
+@begin:
+subleq @n_A @IN
+subleq @n_B @IN
+subleq @B @n_B
+subleq @R @n_A
+subleq @Q @zero
+
+; main loop
+@loop:
+	; check that R >= B
+	; set R' = R
+	subleq @R_clone @R_clone
+	subleq @n_R_clone @n_R_clone
+	subleq @n_R_clone @R
+	subleq @R_clone @n_R_clone
+	; compute (R'-B) and save th result in R'
+	subleq @R_clone @B
+	; if (R'-B)+1 <= 0, then we know for sure that R'-B was negative
+	subleq @R_clone @n_one @break_loop
+
+	; R -= B
+	subleq @R @B
+	; Q += 1
+	subleq @Q @n_one
+	
+	; goto loop
+	subleq @zero @zero @loop
+
+
+@break_loop:
+; print Q and R
+subleq @n_R @R
+subleq @n_Q @Q
+subleq @OUT @n_Q
+subleq @OUT @n_R
+
+
+; reset variables
+subleq @n_A @n_A
+subleq @n_B @n_B
+subleq @B @B
+subleq @Q @Q
+subleq @n_Q @n_Q
+subleq @R @R
+subleq @n_R @n_R @begin
+
+
+; variables
+@n_A: .data 0
+@n_B: .data 0
+@B: .data 0
+@Q: .data 0
+@n_Q: .data 0
+@R: .data 0
+@n_R: .data 0
+@R_clone: .data 0
+@n_R_clone: .data 0
+
+; constants
+@zero: .data 0
+@n_one: .data -1

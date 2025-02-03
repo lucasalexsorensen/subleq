@@ -1,0 +1,28 @@
+@main:
+subleq @minus_a @IN
+subleq @minus_b @IN
+
+subleq @minus_a @MINUS_ONE @loop
+subleq @minus_a @minus_a @done ; just unconditionally jump to minus_a
+
+@loop:
+subleq @acc @minus_b
+subleq @minus_a @MINUS_ONE @loop
+
+@done:
+subleq @acc_tmp @acc
+subleq @OUT @acc_tmp
+
+subleq @acc_tmp @acc_tmp
+subleq @minus_a @minus_a
+subleq @minus_b @minus_b
+subleq @acc @acc @main
+
+
+; vars and consts
+@minus_a: .data 0
+@minus_b: .data 0
+@acc: .data 0
+@acc_tmp: .data 0
+@ONE: .data 1
+@MINUS_ONE: .data -1
